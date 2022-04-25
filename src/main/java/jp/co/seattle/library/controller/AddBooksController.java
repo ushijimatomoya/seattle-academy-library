@@ -103,7 +103,7 @@ public class AddBooksController {
 
         }
         	
-        if (!isbn.equals("") && (!(isbn.length() == 13 || isbn.length() == 10) || !isbn.matches("^[0-9]+$"))) {
+        if (!isbn.equals("") && (!(isbn.length() == 13) && !(isbn.length() == 10) || !isbn.matches("^[0-9]+$"))) {
         	error += "ISBNの桁数または半角数字が正しくありません";
 
         }
@@ -120,7 +120,7 @@ public class AddBooksController {
         model.addAttribute("resultMessage", "登録完了");
 
         // TODO 登録した書籍の詳細情報を表示するように実装
-        BookDetailsInfo bookDetailsInfo = booksService.getBookId();
+        BookDetailsInfo bookDetailsInfo = booksService.getNewBookInfo();
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         //  詳細画面に遷移する
         return "details";
