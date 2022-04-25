@@ -70,7 +70,7 @@
                             <input type="text" name="publisher">
                         </c:if>
                     </div>
-                                        <div>
+                    <div>
                         <span>出版日</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookInfo}">
                             <input type="text" name="publish_date" value="${bookInfo.publishDate}">

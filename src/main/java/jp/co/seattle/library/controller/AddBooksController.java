@@ -93,13 +93,13 @@ public class AddBooksController {
         // 書籍情報を新規登録する
         String error = "";
         
-        if (title.equals("") || author.equals("") || publisher.equals("")) {
+        if (title.equals("") || author.equals("") || publisher.equals("") || publishdate.equals("")) {
         	error += "必須項目を入力してください<br>";
 
         }
         
         if (!publishdate.matches("(\\d{4})(\\d{2})(\\d{2})")) {
-        	error += "出版日は半角数字のYYYMMDD形式で入力してください<br>";
+        	error += "出版日は半角数字のYYYYMMDD形式で入力してください<br>";
 
         }
         	
