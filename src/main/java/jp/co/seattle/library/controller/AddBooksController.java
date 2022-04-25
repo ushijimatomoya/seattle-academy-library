@@ -52,6 +52,9 @@ public class AddBooksController {
             @RequestParam("title") String title,
             @RequestParam("author") String author,
             @RequestParam("publisher") String publisher,
+            @RequestParam("publish_date") String publishdate,
+            @RequestParam("texts") String texts,
+            @RequestParam("isbn") String isbn,
             @RequestParam("thumbnail") MultipartFile file,
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
@@ -61,6 +64,9 @@ public class AddBooksController {
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
+        bookInfo.setPublishDate(publishdate);
+        bookInfo.setTexts(texts);
+        bookInfo.setIsbn(isbn);
 
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
@@ -85,11 +91,37 @@ public class AddBooksController {
         }
 
         // 書籍情報を新規登録する
+        String error = "";
+        
+        if (title.equals("") || author.equals("") || publisher.equals("") || publishdate.equals("")) {
+        	error += "必須項目を入力してください<br>";
+
+        }
+        
+        if (!publishdate.matches("(\\d{4})(\\d{2})(\\d{2})")) {
+        	error += "出版日は半角数字のYYYYMMDD形式で入力してください<br>";
+
+        }
+        	
+        if (!isbn.equals("") && (!(isbn.length() == 13) && !(isbn.length() == 10) || !isbn.matches("^[0-9]+$"))) {
+        	error += "ISBNの桁数または半角数字が正しくありません";
+
+        }
+        	
+        
+        if (!error.equals("")) {
+            model.addAttribute("error", error);
+            model.addAttribute("bookInfo", bookInfo);
+            return "addBook";
+        } 
+        
         booksService.registBook(bookInfo);
 
         model.addAttribute("resultMessage", "登録完了");
 
         // TODO 登録した書籍の詳細情報を表示するように実装
+        BookDetailsInfo bookDetailsInfo = booksService.getnewBookInfo();
+        model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         //  詳細画面に遷移する
         return "details";
     }
