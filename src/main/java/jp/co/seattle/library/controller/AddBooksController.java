@@ -120,7 +120,7 @@ public class AddBooksController {
         model.addAttribute("resultMessage", "登録完了");
 
         // TODO 登録した書籍の詳細情報を表示するように実装
-        BookDetailsInfo bookDetailsInfo = booksService.getNewBookInfo();
+        BookDetailsInfo bookDetailsInfo = booksService.getnewBookInfo();
         model.addAttribute("bookDetailsInfo", bookDetailsInfo);
         //  詳細画面に遷移する
         return "details";
