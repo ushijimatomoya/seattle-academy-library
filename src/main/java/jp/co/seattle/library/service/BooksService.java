@@ -98,6 +98,33 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 	
+	public void editBook(BookDetailsInfo bookInfo) {
+		if (bookInfo.getThumbnailUrl() != null) {
+			String sql = "update books set title = '" 
+			+ bookInfo.getTitle() + "', author = '" 
+			+ bookInfo.getAuthor() + "', publisher = '" 
+			+ bookInfo.getPublisher() + "', publish_date = '" 
+	        + bookInfo.getPublishDate() + "', thumbnail_url = '" 
+	        + bookInfo.getThumbnailUrl() + "', thumbnail_name = '" 
+			+ bookInfo.getThumbnailName() + "', upd_date =  now(),texts = '" 
+			+ bookInfo.getTexts() + "', isbn = '" 
+			+ bookInfo.getIsbn() + "' where id = " + bookInfo.getBookId();
+
+			jdbcTemplate.update(sql);
+
+	} else {
+		String sql = "update books set title = '" 
+		+ bookInfo.getTitle() + "', author = '" 
+		+ bookInfo.getAuthor() + "', publisher = '" 
+		+ bookInfo.getPublisher() + "' , publish_date = '" 
+        + bookInfo.getPublishDate() + "', thumbnail_name = '" 
+		+ bookInfo.getThumbnailName() + "', upd_date =  now(),texts = '" 
+		+ bookInfo.getTexts() + "', isbn = '" 
+		+ bookInfo.getIsbn() + "' where id =" + bookInfo.getBookId();
+
+		jdbcTemplate.update(sql);
+	}
+	}
 
 }
 
