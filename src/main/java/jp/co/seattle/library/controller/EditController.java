@@ -105,23 +105,8 @@ public class EditController {
 	            }
 	        }
 	        // 書籍情報を新規登録する
-	        String error = "";
-	        
-	        if (title.equals("") || author.equals("") || publisher.equals("") || publishdate.equals("")) {
-	        	error += "必須項目を入力してください<br>";
-
-	        }
-	        
-	        if (!publishdate.matches("(\\d{4})(\\d{2})(\\d{2})")) {
-	        	error += "出版日は半角数字のYYYYMMDD形式で入力してください<br>";
-
-	        }
-	        	
-	        if (!isbn.equals("") && (!(isbn.length() == 13) && !(isbn.length() == 10) || !isbn.matches("^[0-9]+$"))) {
-	        	error += "ISBNの桁数または半角数字が正しくありません";
-
-	        }
-	        	
+	         
+	        String error = booksService.validation(title, author, publisher, publishdate, isbn);
 	        
 	        if (!error.equals("")) {
 	            model.addAttribute("error", error);
@@ -134,12 +119,8 @@ public class EditController {
 	        } 
 	        
 			booksService.editBook(bookInfo);
-			System.out.println("---test---");
 			BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
-//	        model.addAttribute("resultMessage", "登録完了");
-//
-//	        // TODO 更新した書籍の詳細情報を表示するように実装
-//	        BookDetailsInfo bookDetailsInfo = booksService.getnewBookInfo();
+	        // TODO 更新した書籍の詳細情報を表示するように実装
 	        model.addAttribute("bookDetailsInfo", bookDetailsInfo);
 	        //  詳細画面に遷移する
 	        return "details";
