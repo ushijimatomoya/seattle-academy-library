@@ -98,6 +98,57 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 	
+	public String validation(String title, String author, String publisher, String publishdate, String isbn) {
+		    String error = "";  
+		    if (title.equals("") || author.equals("") || publisher.equals("") || publishdate.equals("")) {
+	        	error += "必須項目を入力してください<br>";
+
+	        }
+	        
+	        if (!publishdate.matches("(\\d{4})(\\d{2})(\\d{2})")) {
+	        	error += "出版日は半角数字のYYYYMMDD形式で入力してください<br>";
+
+	        }
+	        	
+	        if (!isbn.equals("") && (!(isbn.length() == 13) && !(isbn.length() == 10) || !isbn.matches("^[0-9]+$"))) {
+	        	error += "ISBNの桁数または半角数字が正しくありません";
+
+	        }
+		return error;
+	}
+	
+	/**
+	 * 書籍を更新する
+	 *
+	 * @param bookId 書籍Id
+	 */
+	public void editBook(BookDetailsInfo bookInfo) {
+		if (bookInfo.getThumbnailUrl() != null) {
+		String sql = "update books set title = '" 
+		+ bookInfo.getTitle() + "', author = '" 
+		+ bookInfo.getAuthor() + "', publisher = '" 
+		+ bookInfo.getPublisher() + "', publish_date = '" 
+        + bookInfo.getPublishDate() + "', thumbnail_url = '" 
+        + bookInfo.getThumbnailUrl() + "', thumbnail_name = '" 
+		+ bookInfo.getThumbnailName() + "', upd_date =  now(),texts = '" 
+		+ bookInfo.getTexts() + "', isbn = '" 
+		+ bookInfo.getIsbn() + "' where id = " + bookInfo.getBookId();
+
+			jdbcTemplate.update(sql);
+
+	} else {
+		String sql = "update books set title = '" 
+		+ bookInfo.getTitle() + "', author = '" 
+		+ bookInfo.getAuthor() + "', publisher = '" 
+		+ bookInfo.getPublisher() + "' , publish_date = '" 
+        + bookInfo.getPublishDate() + "', thumbnail_name = '" 
+		+ bookInfo.getThumbnailName() + "', upd_date =  now(),texts = '" 
+		+ bookInfo.getTexts() + "', isbn = '" 
+		+ bookInfo.getIsbn() + "' where id =" + bookInfo.getBookId();
+
+			jdbcTemplate.update(sql);
+	}
+	}
 
 }
 
