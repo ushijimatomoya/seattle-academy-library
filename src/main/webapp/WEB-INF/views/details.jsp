@@ -42,6 +42,9 @@
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
+                <c:if test="${!empty error}">
+                        <p class="error">${error}</p>
+                </c:if>
             </div>
             <div class="content_right">
                 <div>
@@ -71,7 +74,7 @@
             </div>
         </div>
         <div class="edtDelBookBtn_box">
-            <form method="post" action=“#”>
+            <form method="post" action="<%=request.getContextPath()%>/rentBooks">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook">借りる</button>
             </form>
             <form method="post" action=“#”>
