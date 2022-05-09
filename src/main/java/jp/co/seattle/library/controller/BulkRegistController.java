@@ -33,9 +33,6 @@ public class BulkRegistController {
 	@Autowired
 	private BooksService booksService;
 
-//	    @Autowired
-//	    private ThumbnailService thumbnailService;
-
 	/**
 	 * 編集画面に遷移する
 	 * 
