@@ -281,7 +281,8 @@ hr.border_add {
 	margin-bottom:20px
 }
 .bulk_form .caution{
-	margin:10px 0px 30px 400px;
+	margin:10px 200px 30px 200px;
+	text-align: center;
 }
 .bulk_form .caution p{
 	color:#fa8072;
