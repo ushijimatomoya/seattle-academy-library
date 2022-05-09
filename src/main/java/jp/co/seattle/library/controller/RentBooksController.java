@@ -21,20 +21,16 @@ import jp.co.seattle.library.service.RentBooksService;
 @Controller /** APIの入り口 */
 public class RentBooksController {
 	final static Logger logger = LoggerFactory.getLogger(RentBooksController.class);
-	
-	 @Autowired
-	 private RentBooksService rentBooksService;
-	 @Autowired
-	    private BooksService booksService;
-	 
-	 
+
+	@Autowired
+	private RentBooksService rentBooksService;
+	@Autowired
+	private BooksService booksService;
 
 	@Transactional
-    @RequestMapping(value = "/rentBooks", method = RequestMethod.POST)
-	public String rentBook (Locale locale,
-    @RequestParam("bookId") int bookId,
-    Model model) {
-	
+	@RequestMapping(value = "/rentBooks", method = RequestMethod.POST)
+	public String rentBook(Locale locale, @RequestParam("bookId") int bookId, Model model) {
+
 		int rentBookinfo = rentBooksService.rentBookinfo(bookId);
 
 		if (rentBookinfo == 0) {

@@ -15,9 +15,9 @@ public class RentBooksService {
 	private JdbcTemplate jdbcTemplate;
 	
 	/**
-	 * 情報を登録する
+	 * 書籍IDを登録する
 	 * 
-	 * @param 
+	 * @param bookId 書籍ID
 	 */
 	public void regisRentBook(int bookId) {
 
@@ -26,6 +26,12 @@ public class RentBooksService {
 		jdbcTemplate.update(sql, bookId);
 	}
 
+	/**
+	 * 書籍IDに紐づく情報を取得する
+	 *
+	 * @param bookId 書籍ID
+	 * @return 書籍情報
+	 */
 	public int rentBookinfo(int bookId) {
 
 		String sql = "SELECT count(*) FROM rentalbooks where book_id = ?;";
