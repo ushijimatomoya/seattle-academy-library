@@ -25,6 +25,17 @@ public class RentBooksService {
 
 		jdbcTemplate.update(sql, bookId);
 	}
+	
+	/**
+	 * 書籍IDを削除する
+	 * 
+	 * @param bookId 書籍ID
+	 */
+	public void deleteRentBook(Integer bookId) {
+		
+		String sql = "delete from rentalbooks where book_id = ?;";
+		jdbcTemplate.update(sql, bookId);
+	}
 
 	/**
 	 * 書籍IDに紐づく情報を取得する
