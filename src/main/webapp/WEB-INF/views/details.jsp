@@ -42,8 +42,14 @@
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
+                <c:if test="${bookDetailsInfo.rentBookId == 0}">
+                    <p>貸し出し可</p>
+                </c:if>
+                <c:if test="${bookDetailsInfo.rentBookId != 0}">
+                    <p>貸し出し中</p>
+                </c:if>
                 <c:if test="${!empty error}">
-                        <p class="error">${error}</p>
+                    <p class="error">${error}</p>
                 </c:if>
             </div>
             <div class="content_right">
@@ -70,7 +76,7 @@
                 <div>
                     <span>説明文</span>
                     <p>${bookDetailsInfo.texts}</p>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="edtDelBookBtn_box">
