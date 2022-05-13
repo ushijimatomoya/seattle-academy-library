@@ -44,11 +44,15 @@ public class UsersService {
      */
     public UserInfo selectUserInfo(String email, String password) {
         // TODO SQL生成
-        String sql = "";
-
-        UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
-        return selectedUserInfo;
-
+        
+    	try {
+        	String sql = "select * from users where email = ? and password = ?";
+            UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper(), email, password);
+            return selectedUserInfo;
+    	} catch (Exception e) {
+    		return null;
+    	}
+    	
     }
 
 }
