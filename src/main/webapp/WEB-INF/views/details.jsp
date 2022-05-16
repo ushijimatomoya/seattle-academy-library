@@ -42,8 +42,9 @@
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
+                    <p>${bookDetailsInfo.status}</p>
                 <c:if test="${!empty error}">
-                        <p class="error">${error}</p>
+                    <p class="error">${error}</p>
                 </c:if>
             </div>
             <div class="content_right">
@@ -70,7 +71,7 @@
                 <div>
                     <span>説明文</span>
                     <p>${bookDetailsInfo.texts}</p>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="edtDelBookBtn_box">
