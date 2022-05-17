@@ -65,17 +65,32 @@ input {
 }
 
 /* ここから追加 */
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
 .search_box {
     position: relative;
     margin-left: -5px;
+    display: flex;
 }
-
+.search_text_box {
+	border: solid #2196f3;
+	height: 40px;
+	width: 200px;
+	margin-right: 3px;
+}
 .search1 {
-    border-radius: 20px 0 0 20px;
     font-size: 15px;
-    width: 325px;
+    width: 80px;
     padding: 4px 10px;
-    border: 1px solid #2196f3;
+    border: solid #2196f3;
+    height: 40px;
+    background-color: #7db4e6;
+    color: white;
+    box-shadow: 0 0 2px black;
 }
 
 .search1:hover {
@@ -85,7 +100,6 @@ input {
 .search_box:after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    content: "\f002";
     position: absolute;
     top: 7px;
     right: 12px;
