@@ -34,8 +34,9 @@ public class SearchController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
 	public String searchBook(Locale locale, 
 			@RequestParam("title") String title, 
+			@RequestParam("match") String match, 
 			Model model) {
-		model.addAttribute("bookList", booksService.searchBook(title));
+		model.addAttribute("bookList", booksService.searchBook(title, match));
 		return "home";
 	}
 

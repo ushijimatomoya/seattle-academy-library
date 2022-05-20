@@ -123,8 +123,9 @@ public class BooksService {
 	 * @param bookId 書籍Id
 	 */
 	public void editBook(BookDetailsInfo bookInfo) {
+		String sql;
 		if (bookInfo.getThumbnailUrl() != null) {
-		String sql = "update books set title = '" 
+		sql = "update books set title = '" 
 		+ bookInfo.getTitle() + "', author = '" 
 		+ bookInfo.getAuthor() + "', publisher = '" 
 		+ bookInfo.getPublisher() + "', publish_date = '" 
@@ -137,7 +138,7 @@ public class BooksService {
 			jdbcTemplate.update(sql);
 
 	} else {
-		String sql = "update books set title = '" 
+		sql = "update books set title = '" 
 		+ bookInfo.getTitle() + "', author = '" 
 		+ bookInfo.getAuthor() + "', publisher = '" 
 		+ bookInfo.getPublisher() + "' , publish_date = '" 
@@ -154,10 +155,16 @@ public class BooksService {
 		 *
 		 * 
 		 */
-		public List<BookInfo> searchBook(String title) {
-			List<BookInfo> searchBook = jdbcTemplate.query("select * from books where title like '%" + title + "%';",new BookInfoRowMapper());
+		public List<BookInfo> searchBook(String title, String match) {
+			String sql;
+			if (match.equals("pert")) {
+				sql = "select * from books where title like '%" + title + "%';";
+			} else {
+				sql = "select * from books where title like '" + title + "';";
+			}			
+			List<BookInfo> searchBook = jdbcTemplate.query(sql, new BookInfoRowMapper());
 			return searchBook;
-		} 
+		}
 
 }
 

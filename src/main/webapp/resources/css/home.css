@@ -68,19 +68,20 @@ input {
 .container {
   display: flex;
   justify-content: space-between;
-  margin-right: 10px;
 }
 
 .search_box {
     position: relative;
     margin-left: -5px;
     display: flex;
+    align-items: center;
 }
 .search_text_box {
 	border: solid #2196f3;
 	height: 40px;
 	width: 200px;
 	margin-right: 3px;
+	margin-left: 3px;
 }
 .search1 {
     font-size: 15px;

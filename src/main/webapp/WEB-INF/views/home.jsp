@@ -29,7 +29,7 @@
             <h1>Home</h1>
             <form method="post" action="<%=request.getContextPath()%>/search">
                 <div class="search_box">
-                    <input class="search_text_box" type="search" name="title" autocomplete="off" placeholder="検索を入力">
+                    <input id="pert" type="radio" name="match" checked="checked" value="pert" /> <label for="pert">部分一致</label> <input id="perfect" type="radio" name="match" value="perfect" /> <label for="perfect">完全一致</label> <input class="search_text_box" type="search" name="title" autocomplete="off" placeholder="検索を入力">
                     <button type="submit" class="search1">検索</button>
                 </div>
             </form>
