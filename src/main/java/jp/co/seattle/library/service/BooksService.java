@@ -48,7 +48,7 @@ public class BooksService {
 	public BookDetailsInfo getBookInfo(int bookId) {
 		
 		// JSPに渡すデータを設定する
-		String sql = "select *, case when rentalbooks.book_id is null then '貸し出し可' else '貸し出し中' end as status from books left join rentalbooks on books.id = rentalbooks.book_id where books.id =" + bookId;
+		String sql = "select *, case when rentalbooks.rent_date is null then '貸し出し可' else '貸し出し中' end as status from books left join rentalbooks on books.id = rentalbooks.book_id where books.id =" + bookId;
 		
 		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 		
@@ -59,7 +59,7 @@ public class BooksService {
 	 * 新規登録した書籍の情報を取得する
 	 */
 	public BookDetailsInfo getnewBookInfo() {
-		String sql = "select *, case when rentalbooks.book_id is null then '貸し出し可' else '貸し出し中' end as status from books left join rentalbooks on books.id = rentalbooks.book_id where books.id = (select max(id) from books);";
+		String sql = "select *, case when rentalbooks.rent_date is null then '貸し出し可' else '貸し出し中' end as status from books left join rentalbooks on books.id = rentalbooks.book_id where books.id = (select max(id) from books);";
 		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 		return bookDetailsInfo;
 	}
@@ -93,9 +93,9 @@ public class BooksService {
 	 */
 	public void deleteBook(Integer bookId) {
 		
-		String sql = "delete from books where id = " + bookId + ";";
+		String sql = "with deletebooks as (delete from books where books.id = ? returning books.id) delete from rentalbooks where ? in (select rentalbooks.book_id from deletebooks);";
 		
-		jdbcTemplate.update(sql);
+		jdbcTemplate.update(sql, bookId, bookId);
 	}
 	
 	public String validation(String title, String author, String publisher, String publishdate, String isbn) {

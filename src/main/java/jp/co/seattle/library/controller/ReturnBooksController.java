@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.BookRentInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentBooksService;
 
@@ -27,19 +28,29 @@ public class ReturnBooksController {
 	@Autowired
 	private BooksService booksService;
 
+	/**
+	 * 返却処理
+	 *
+	 * @param bookId  
+	 * @param model 
+	 * @return 詳細画面に遷移
+	 */
 	@Transactional
 	@RequestMapping(value = "/returnRentBooks", method = RequestMethod.POST)
-	public String rentBook(Locale locale, @RequestParam("bookId") int bookId, Model model) {
+	public String rentBook(Locale locale, 
+			@RequestParam("bookId") int bookId, 
+			Model model) {
+         
+ 		BookRentInfo rentInfo = rentBooksService.rentBookInfo(bookId);
+			if (rentInfo == null || rentInfo.getReturnDate() != null) {
+				model.addAttribute("error", "貸し出されていません。");
+			} else {
+	 				rentBooksService.returnRentBook(bookId);
+			}
+ 			
 
-		int rentBookinfo = rentBooksService.rentBookinfo(bookId);
-
-		if (rentBookinfo == 0) {
-			model.addAttribute("error", "貸し出されていません。");
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-		} else {
-			rentBooksService.deleteRentBook(bookId);
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-		}
+         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+		
 		return "details";
 
 	}
