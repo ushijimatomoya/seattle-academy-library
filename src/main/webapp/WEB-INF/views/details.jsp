@@ -77,7 +77,6 @@
         <div class="edtDelBookBtn_box">
             <form method="post" action="<%=request.getContextPath()%>/rentBooks">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_rentBook">借りる</button>
-                <input type="hidden" name="title" value="${bookDetailsInfo.title}">
             </form>
             <form method="post" action="<%=request.getContextPath()%>/returnRentBooks">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook">返す</button>
