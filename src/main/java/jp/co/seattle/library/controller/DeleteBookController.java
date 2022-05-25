@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.BookRentInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentBooksService;
 
@@ -43,9 +44,10 @@ public class DeleteBookController {
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
     
-        int rentBookinfo = rentBooksService.rentBookinfo(bookId);
-        if (rentBookinfo == 0) {
-            booksService.deleteBook(bookId);
+        
+        BookRentInfo rentInfo = rentBooksService.rentBookInfo(bookId);
+        if (rentInfo == null || rentInfo.getRentDate() == null) {
+        	booksService.deleteBook(bookId);
             model.addAttribute("bookList", booksService.getBookList());
             return "home";
         } else {

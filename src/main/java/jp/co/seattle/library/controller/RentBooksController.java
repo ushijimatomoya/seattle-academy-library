@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.BookRentInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentBooksService;
 
@@ -29,18 +30,24 @@ public class RentBooksController {
 
 	@Transactional
 	@RequestMapping(value = "/rentBooks", method = RequestMethod.POST)
-	public String rentBook(Locale locale, @RequestParam("bookId") int bookId, Model model) {
+	public String rentBook(Locale locale, 
+			@RequestParam("bookId") int bookId, 
+			Model model) {
+		
+		BookRentInfo rentInfo = rentBooksService.rentBookInfo(bookId);
 
-		int rentBookinfo = rentBooksService.rentBookinfo(bookId);
-
-		if (rentBookinfo == 0) {
+		if (rentInfo == null) {
 			rentBooksService.regisRentBook(bookId);
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		} else {
-
-			model.addAttribute("error", "貸出済みです。");
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+			if (rentInfo.getRentDate() == null) {
+				rentBooksService.updateRentBook(bookId);
+			} else {
+				model.addAttribute("error", "貸出済みです。");
+			}
 		}
+		
+
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		return "details";
 	}
 
